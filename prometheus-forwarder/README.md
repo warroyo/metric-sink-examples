@@ -26,6 +26,7 @@ kubectl apply -f ms.yml
 
 ```
 kubectl apply -f app.yml
+```
 
 4. visit the app on the node port that was exposed on `/metrics` the counter will increase as you refresh
 
