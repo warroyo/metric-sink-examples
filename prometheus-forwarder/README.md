@@ -33,3 +33,19 @@ kubectl apply -f app.yml
 5. visit the prometheus client running on the worker node on port `9978` and you should see the metrics from the example app. this can now be scraped by any prometheus instance.
 
 ## Adding in PCF Reliability view
+
+If you are running PCF Reliability view you can then view these metrics in the Bundled grafana UI. The only requirement being that you configured the TSDB setting in the tile to have the following custom scrape config.
+
+```
+job_name: cluster_metric_sinks
+dns_sd_configs:
+- names:
+    - q-s4.worker.*.*.bosh.
+  type: A
+  port: 9978
+```
+
+simply configure a grafana query with the following settings.
+
+![grafana](grafana.png)
+
