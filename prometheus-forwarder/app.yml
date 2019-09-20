@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: example-app
+  name: example-app
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '8080'
+spec:
+  containers:
+  - image: quay.io/brancz/prometheus-example-app:v0.1.0
+    name: example-app
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: example-app
+  name: example-app
+  namespace: default
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: example-app
+  sessionAffinity: None
+  type: NodePort
